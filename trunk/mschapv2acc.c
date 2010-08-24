@@ -19,16 +19,16 @@
  */
 
 
-#include        <stdio.h>
-#include        <stdlib.h>
-#include        <string.h>
-#include 	<unistd.h>
-#include	<assert.h>
-#include        <ctype.h>
-#include        <getopt.h>
-#include	<time.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <assert.h>
+#include <ctype.h>
+#include <getopt.h>
+#include <time.h>
 
-#include        "mschapv2lib.h"
+#include "mschapv2lib.h"
 
 //
 // HELP
@@ -86,60 +86,76 @@ void test( unsigned char *hash, char *pwd )
 	unsigned char calculated[24];
 	int i;
 
-	if ( Verb == 1 ) {
+	if ( Verb == 1 )
+	{
 		printf( "%s :: ", pwd );
-		for( i = 0; i < 16; i++ ) {
+		for( i = 0; i < 16; i++ )
+		{
 			printf( "%02x ", hash[i] );
 		}
 	printf ( " :: " );
 	}
 
-	if ( CryptA == 1 ) {
-		if ( memcmp( Sec, hash+14, 2 ) == 0 ) {
+	if ( CryptA == 1 )
+	{
+		if ( memcmp( Sec, hash+14, 2 ) == 0 )
+		{
 			ChallengeResponseBIS( Challenge, hash, calculated );
 			NbP++;
-			if ( memcmp( Response, calculated, 16 ) != 0 ) {
-				if ( Verb == 1 ) {
+			if ( memcmp( Response, calculated, 16 ) != 0 )
+			{
+				if ( Verb == 1 )
+				{
 					printf( "Not Ok...\n" );
 				}
 			}
-			else {
-				if ( CTime == 1 ) {
+			else
+			{
+				if ( CTime == 1 )
+				{
 					T2 = time( NULL );
 					tmpt = difftime( T2, T1 );
 					printf( "\nPassword Found: %s in %lld Hour(s) %lld Min(s) %lld Sec(s)\n\n", pwd,( ( ( long long int )( tmpt ) ) / 3600 ), ( ( ( ( long long int )( tmpt ) ) % 3600 ) / 60 ), ( ( long long int ) ( tmpt ) % 60 ) );
 					printf( "%ld hashes calculated, %ld hashes tested\n", NbH, NbP );
 					exit( 0 );
 				}
-				else {
+				else
+				{
 					printf( "\nPassword Found: %s \n\n", pwd );
 					exit( 0 );
 				}
 			}
 		}
-		else {
-			if ( Verb == 1 ) {
+		else
+		{
+			if ( Verb == 1 )
+			{
 				printf( "Not Ok... Excluded!\n" );
 			}
 		}
 	}
-	else {
+	else
+	{
 		ChallengeResponseBIS( Challenge, hash, calculated );
 		NbP++;
-		if ( memcmp( Response, calculated, 16 ) != 0 ) {
+		if ( memcmp( Response, calculated, 16 ) != 0 )
+		{
 			if ( Verb == 1 ) {
 				printf( "NonOk...\n" );
 			}
 		}
-		else {
-			if ( CTime == 1 ) {
+		else
+		{
+			if ( CTime == 1 )
+			{
 				T2 = time( NULL );
 				tmpt = difftime( T2, T1 );
 				printf( "\nPassword Found: %s in %lld Hour(s) %lld Min(s) %lld Sec(s)\n\n", pwd, ( ( ( long long int ) ( tmpt ) ) / 3600 ), ( ( ( ( long long int ) ( tmpt ) ) % 3600 ) / 60 ), ( ( long long int ) ( tmpt ) % 60 ) );
 				printf( "%ld hashes calculated, %ld hashes tested\n", NbH, NbP );
 				exit( 0 );
 			}
-			else {
+			else
+			{
 				printf( "\nPassword Found: %s \n\n", pwd );
 				exit( 0 );
 			}
@@ -153,15 +169,19 @@ void x4 ( char *pwd, int nbc )
 	int i;
 	unsigned char Thash[4][16];
 
-	if ( nbTabTest == 4 ) {
-		if ( CryptSEEmd4 == 1 ) {
+	if ( nbTabTest == 4 )
+	{
+		if ( CryptSEEmd4 == 1 )
+		{
 			NtPasswordHashSEE2 ( TabTest[0], TabTest[1], TabTest[2], TabTest[3], Thash[0], Thash[1], Thash[2], Thash[3] );
 			NbH = NbH + 4;
-			for ( i = 0; i < 4 ; i++ ) {
+			for ( i = 0; i < 4 ; i++ )
+			{
 				test( Thash[i], TabTest[i] );
 			}
 		}
-		else {
+		else
+		{
 			for ( i = 0; i < 4 ; i++ ) {
 				NtPasswordHash ( TabTest[i], Thash[0] );
 				NbH++;
@@ -179,9 +199,11 @@ void bf ( int rang, char *pwdt, int lpwdt, char *caract, int lcaract )
 {
 	int k;
 
-	for ( k = 0; k < lcaract; k++ ) {
+	for ( k = 0; k < lcaract; k++ )
+	{
 		pwdt[rang-1] = caract[k];
-		if ( rang != lpwdt ) {
+		if ( rang != lpwdt )
+		{
 			bf( rang+1, pwdt, lpwdt, caract, lcaract );
 		}
 		x4( pwdt, lpwdt );
@@ -209,19 +231,22 @@ int main ( int argc, char *argv[] )
 	// MAIN CODE
 	// 
 	
-	if ( argc < 2 ) {
+	if ( argc < 2 )
+	{
 		printf( usage );
 		exit( 0 );
 	}
 	
-	if ( argv[argc-1][0] == '-' ) {
+	if ( argv[argc-1][0] == '-' )
+	{
 		printf( "Err: P455 4 Fi14 M4N, wh3r3 i5 Ur fuckin' ch4113ng3 fi13?\n ");
 		printf( usage );
 		exit( 0 );
 	}			
 
 	// Load challenge information
-	if ( ( f_in = fopen( argv[argc-1], "r" ) ) == NULL ) {
+	if ( ( f_in = fopen( argv[argc-1], "r" ) ) == NULL )
+	{
 		printf( "Err: Open File Failed\n" );
 		exit( 0 );
 	}
@@ -240,22 +265,26 @@ int main ( int argc, char *argv[] )
 	printf( "File Loaded:\n" );
 	printf( " - UserName: %s\n", user_name );
 	printf( " - AuthenticatorChallenge: " );
-	for( i = 0; i < 16; i++ ) {
+	for( i = 0; i < 16; i++ )
+	{
 		printf( "%02x ", auth_challenge[i] );
 	}
 	printf ( "\n" );
 	printf( " - PeerChallenge: " );
-	for( i = 0; i < 16; i++ ) {
+	for( i = 0; i < 16; i++ )
+	{
 		printf( "%02x ", peer_challenge[i] );
 	}
 	printf ( "\n" );
 	printf( " - Challenge: " );
-	for( i = 0; i < 8; i++ ) {
+	for( i = 0; i < 8; i++ )
+	{
 		printf( "%02x ", Challenge[i] );
 	}
 	printf ( "\n" );
 	printf( " - NtResponse: " );
-	for( i = 0; i < 24; i++ ) {
+	for( i = 0; i < 24; i++ )
+	{
 		printf( "%02x ", Response[i] );
 	}
 	printf ( "\n" );
@@ -264,14 +293,17 @@ int main ( int argc, char *argv[] )
 	lpwd = 20;
 	
 	// Command line options
-	while ( ( option = getopt( argc, argv, "r:xVsiw:?" ) ) != -1 ) {
-		switch ( option ) {
+	while ( ( option = getopt( argc, argv, "r:xVsiw:?" ) ) != -1 )
+	{
+		switch ( option )
+		{
 			case 'r' :
 				// Maximal number of caracters
 				assert( strlen( optarg ) < 255 );
 				strncpy( lround, optarg, 255 );
 				lpwd = atoi( lround );
-				if ( lpwd < 0 || lpwd > 128 ) {
+				if ( lpwd < 0 || lpwd > 128 )
+				{
 					printf( "Err. Number Of Caracters Is Wrong\n");
 					exit( 0 );
 				}
@@ -279,7 +311,8 @@ int main ( int argc, char *argv[] )
 				break;
 			case 'x' :
 				// Cryptanalysis
-				if ( FileL == 1 ) {
+				if ( FileL == 1 )
+				{
 					CryptA = 1;
 					printf( "Cryptanalysis In Progress ...\n" );
 					memset( response_cmp, 0, sizeof( response_cmp ) );
@@ -291,7 +324,8 @@ int main ( int argc, char *argv[] )
 							memset( keys, 0, sizeof( keys ) );
 							memcpy( keys+14, &mm, 2 );
 							ChallengeResponse( Challenge, keys, calculatedT );
-							if ( ( memcmp( calculatedT+16, Response+16, 8 ) ) == 0 ) {
+							if ( ( memcmp( calculatedT+16, Response+16, 8 ) ) == 0 )
+							{
 								printf( "Cryptanalysis Succeeded !\n" );
 								memcpy( Sec, keys+14, 2 );
 								fd = 1;
@@ -299,12 +333,14 @@ int main ( int argc, char *argv[] )
 							mm++;
 						}
 					}
-					if ( fd == 0 ) {
+					if ( fd == 0 )
+					{
 						printf( "Err: Cryptanalysis Failed\n" );
 						exit( 0 );
 					}			
 				}
-				else {
+				else
+				{
 					printf( "Err: No File Loaded\n" );
 					exit( 0 );
 				}
@@ -340,8 +376,8 @@ int main ( int argc, char *argv[] )
 	
 	printf( "Login: %s\n", user_name );
 	
-	if ( Mode == 0 ) {
-
+	if ( Mode == 0 )
+	{
 		//
 		// Mode Brute Force
 		// 
@@ -361,17 +397,19 @@ int main ( int argc, char *argv[] )
 			TabTest = malloc( 4 * sizeof( char* ) );
 			nbTabTest = 0;
 			Cnbc = i;
-			        for ( k = 0; k < 4; k++ ) {
-					TabTest[k] = malloc ( ( i + 1 ) * sizeof( char ) );
-					bzero( TabTest[k], ( i + 1 ) );
-				}
+			for ( k = 0; k < 4; k++ )
+			{
+				TabTest[k] = malloc ( ( i + 1 ) * sizeof( char ) );
+				bzero( TabTest[k], ( i + 1 ) );
+			}
 			// Brute Force
 			bf( 1, pwd0, i, caract, nbc );
 			// In case we don't test all x4 elts
 			nbTabTest = 4;
 			x4( TabTest[0], i );
 			free( pwd0 );
-			for ( k = 0; k < 4 ; k++ ) {
+			for ( k = 0; k < 4 ; k++ )
+			{
 				free( TabTest[k] );
 			}
 			free( TabTest );
@@ -381,8 +419,8 @@ int main ( int argc, char *argv[] )
 		printf( "%ld hashes calculated, %ld hashes tested\n", NbH, NbP );
 	}
 
-	if ( Mode == 1 ) {
-
+	if ( Mode == 1 )
+	{
 		//
 		// Standard Input Mode
 		//
@@ -391,7 +429,8 @@ int main ( int argc, char *argv[] )
 
 		printf( "[ctrl+c] to exit\n" );
 		
-		while ( 1 ) {
+		while ( 1 )
+		{
 			printf( "Password to test: " );
 			scanf( "%s", inpt );
 			NtPasswordHash( inpt, hash );
@@ -400,15 +439,16 @@ int main ( int argc, char *argv[] )
 		}
 	}
 	
-	if (Mode == 2) {
-
+	if (Mode == 2)
+	{
 		//
 		// Dictionary Mode
 		// 
 
 		printf( "Mode Dictionary\n" );
 
-		if ( ( f_in = fopen( pdico, "r" ) ) == NULL ) {
+		if ( ( f_in = fopen( pdico, "r" ) ) == NULL )
+		{
 			printf( "Err: Open Dico File Failed\n" );
 			exit( 0 );
 		}
@@ -417,16 +457,19 @@ int main ( int argc, char *argv[] )
 		
 		i = 0;
 		c = getc( f_in );
-		while ( c != EOF ) {
-			while ( c != '\n' ) {
+		while ( c != EOF )
+		{
+			while ( c != '\n' )
+			{
 				inpt[i] = c;
 				i++;
 				c = getc( f_in );
 			}
 			inpt[i] = '\0';
-			if ( Verb == 1 ) {
-                                printf( "%s\n", inpt );
-                        }
+			if ( Verb == 1 )
+			{
+				printf( "%s\n", inpt );
+            }
 			NtPasswordHash ( inpt, hash );
 			test( hash, inpt );
 			i = 0;

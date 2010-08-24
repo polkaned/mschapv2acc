@@ -29,7 +29,8 @@ void Ascii2Unicode( char *Ascii, int Nbc, unsigned char *Unicode )
 	int i;
 
 	bzero( Unicode, Nbc * 2 );
-	for ( i = 0; i < Nbc; i++ ) {
+	for ( i = 0; i < Nbc; i++ )
+	{
 		Unicode[i*2] = Ascii[i];
 	}
 }
@@ -46,7 +47,8 @@ void NtPasswordHash( char *Password, unsigned char *PasswordHash )
 	int nbc;
 
 	nbc = strlen( Password );
-	if ( ( nbc * 2 ) >= 256 ) {
+	if ( ( nbc * 2 ) >= 256 )
+	{
 		nbc = 128;
 	}
 	Ascii2Unicode ( Password, nbc, PasswordUC );
@@ -64,7 +66,7 @@ void NtPasswordHash( char *Password, unsigned char *PasswordHash )
 
 unsigned char TPasswordUC[4][20] =
 {
-        "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0",
+	"\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0",
 	"\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0",
 	"\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0",
 	"\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
@@ -77,7 +79,8 @@ void NtPasswordHashSEE2( char *Password1, char *Password2, char *Password3, char
 	int nbc;
 	
 	nbc = strlen( Password1 );
-	if ( ( nbc * 2 ) >= 256 ) {
+	if ( ( nbc * 2 ) >= 256 )
+	{
 		nbc = 128;
 	}
 	
@@ -121,7 +124,8 @@ void DesEncrypt ( unsigned char *Clear, unsigned char *Key, unsigned char *Cyphe
 	key0[5] = ( ( Key[4] & 0x1F ) << 2 ) | ( Key[5] >> 6 );
 	key0[6] = ( ( Key[5] & 0x3F ) << 1 ) | ( Key[6] >> 7 );
 	key0[7] = Key[6] & 0x7F;
-	for ( i = 0; i < 8; i++ ) {
+	for ( i = 0; i < 8; i++ )
+	{
 		key0[i] = ( key0[i] << 1 );
 	}
 
