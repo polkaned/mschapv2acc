@@ -22,10 +22,10 @@
  * Thanks a lot to Romain Levy to help  me to make this so quickly
  */
 
-#include        <stdio.h>
-#include        <stdlib.h>
-#include        <string.h>
-#include        <getopt.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <getopt.h>
 
 char usage[] =
 "\n"
@@ -48,7 +48,8 @@ unsigned char blank16[16];
 
 memset( blank16, 0, sizeof( blank16 ) );
 
-if ( argc < 2 ) {
+if ( argc < 2 )
+{
 	printf( usage );
 	exit( 0 );
 }
@@ -97,7 +98,8 @@ Response[21] = (unsigned char)Val21;
 Response[22] = (unsigned char)Val22;
 Response[23] = (unsigned char)Val23;
 
-if ( ( f_out = fopen( argv[argc-1], "w" ) ) == NULL ) {
+if ( ( f_out = fopen( argv[argc-1], "w" ) ) == NULL )
+{
 	printf( "Err: Open File To Write Failed\n" );
 	exit( 0 );
 }
