@@ -1,4 +1,10 @@
-CC=gcc
+OS=$(shell uname -s)
+ifeq ($(OS),Darwin)
+	CC=gcc-4.0
+else
+	CC=gcc
+endif
+
 CFLAGS=-O2 -ggdb -Wall -msse2
 
 all: mschapv2acc.o mschapv2lib.o md4.o des.o md4_sse2.o md4sse2.o wpe2acc.o
