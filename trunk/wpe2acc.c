@@ -25,7 +25,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <getopt.h>
 
 char usage[] =
 "\n"
@@ -73,16 +72,16 @@ Challenge[7] = (unsigned char)Val7;
 
 printf( "response: " );
 scanf( "%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x", &Val0, &Val1, &Val2, &Val3, &Val4, &Val5, &Val6, &Val7, &Val8,&Val9, &Val10, &Val11, &Val12, &Val13, &Val14, &Val15, &Val16, &Val17, &Val18, &Val19, &Val20, &Val21, &Val22, &Val23 );
-Response[0] = (unsigned char)Val0;
-Response[1] = (unsigned char)Val1;
-Response[2] = (unsigned char)Val2;
-Response[3] = (unsigned char)Val3;
-Response[4] = (unsigned char)Val4;
-Response[5] = (unsigned char)Val5;
-Response[6] = (unsigned char)Val6;
-Response[7] = (unsigned char)Val7;
-Response[8] = (unsigned char)Val8;
-Response[9] = (unsigned char)Val9;
+Response[0]  = (unsigned char)Val0;
+Response[1]  = (unsigned char)Val1;
+Response[2]  = (unsigned char)Val2;
+Response[3]  = (unsigned char)Val3;
+Response[4]  = (unsigned char)Val4;
+Response[5]  = (unsigned char)Val5;
+Response[6]  = (unsigned char)Val6;
+Response[7]  = (unsigned char)Val7;
+Response[8]  = (unsigned char)Val8;
+Response[9]  = (unsigned char)Val9;
 Response[10] = (unsigned char)Val10;
 Response[11] = (unsigned char)Val11;
 Response[12] = (unsigned char)Val12;
