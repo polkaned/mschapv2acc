@@ -205,7 +205,10 @@ void bf ( int rang, char *pwdt, int lpwdt, char *caract, int lcaract )
 		{
 			bf( rang+1, pwdt, lpwdt, caract, lcaract );
 		}
-		x4( pwdt, lpwdt );
+		else
+		{
+			x4( pwdt, lpwdt );
+		}
 	}
 }
 
