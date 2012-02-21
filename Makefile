@@ -1,11 +1,17 @@
 OS=$(shell uname -s)
+DARWIN=$(shell uname -r | cut -d. -f1)
 ifeq ($(OS),Darwin)
+ifeq ($(DARWIN),10)
 	CC=gcc-4.0
+endif
+ifeq ($(DARWIN),11)
+	CC=gcc -arch i386
+endif
 else
 	CC=gcc
 endif
 
-CFLAGS=-O2 -ggdb -Wall -msse2
+CFLAGS=-w -O2 -msse2 -m32
 
 all: mschapv2acc.o mschapv2lib.o md4.o des.o md4_sse2.o md4sse2.o wpe2acc.o
 	$(CC) -o wpe2acc wpe2acc.o
