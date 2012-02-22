@@ -1,0 +1,22 @@
+0.2.14	Lion support
+0.2.13	Bug fix in password making loop
+0.2.12	Snow Leopard support
+0.2.11	MacOs X compilation support	
+0.2.10	Fix english mistakes...
+0.2.9   Fix compil. warn of wpe2acc
+0.2.8   wpe2acc is out, convert hexa authenticator challenge information to
+binary (design for FreeRADIUS Wireless Pwnage)
+0.2.7   MD4 sse2 works well now
+0.2.6   Fix bug on x4, the last pwd wasn't tested
+	Now, you can fix the max. number of char. in command line
+0.2.5	Fix some bugs, clear code
+0.2.4	Add MD4 sse2 asm code of Simon Marechal (thx to Christophe Devine for
+his usefull code exemple, thx to Romain Levy to debug my code)
+0.2.3   Modify xyssl DES lib for DES key schedule : generate DES encryption
+subkeys only (thx to Christophe Devine for this savefull time idea)
+0.2.2   Use xyssl cryptographic lib of Christophe Devine
+0.2.1   Add a "thing" which seems to show the spent time, add brute force algo recurrence
+0.2.0   Add Makefile for standalone compilation (thx to Romain Levy)
+0.1.1   Add dictionnary mode, Reorganization code
+0.1.0	Initial release
+
