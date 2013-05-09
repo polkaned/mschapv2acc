@@ -19,7 +19,7 @@
  */
 
 /*
- * Thanks a lot to Romain Levy to help  me to make this so quickly
+ * Thanks a lot to Romain Levy to help me to make this so quickly
  */
 
 #include <stdio.h>

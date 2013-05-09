@@ -1,3 +1,4 @@
+0.2.15  Full 64 bits support for Linux and MacOS X (thx to Romain Levy this good job)
 0.2.14	Lion support
 0.2.13	Bug fix in password making loop
 0.2.12	Snow Leopard support
