@@ -1,5 +1,5 @@
 // (C) 2007 Christophe Devine
-// 2013 Adapted by Romain LEVY for Linux full 64 bits support
+// 2013 Adapted by Romain LEVY for 64 bits support
 
 #include "md4sse2.h"
 

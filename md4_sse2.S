@@ -1,6 +1,7 @@
 // (C) 2006 Simon Marechal
 // 2009 Adapted by Benjamin CHARLES for MacOS X support
-// 2013 Adapted by Romain LEVY for Linux full 64 bits support
+// 2013 Adapted by Romain LEVY for Linux 64 bits support
+// 2013 Adapted by Romain LEVY for MacOS X 64 bits support
 
 .globl md4_sse
 .globl _md4_sse
