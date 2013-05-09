@@ -1,5 +1,6 @@
 // (C) 2006 Simon Marechal
 // 2009 Adapted by Benjamin CHARLES for MacOS X support
+// 2013 Adapted by Romain LEVY for Linux full 64 bits support
 
 .globl md4_sse
 .globl _md4_sse
@@ -71,6 +72,16 @@ const_stage3:
 	pxor z, tmp1;   \
 	pxor x, tmp1
 
+#ifdef __LP64__
+#define STEP1(f, a, b, c, d, x, s)      \
+	f(b, c, d);                     \
+	paddd (x*16)(%rdx), tmp1;       \
+	paddd tmp1, a;                  \
+	movapd a, tmp3;                 \
+	pslld $s, a;                    \
+	psrld $(32-s), tmp3;            \
+	por tmp3, a
+#else
 #define STEP1(f, a, b, c, d, x, s)      \
 	f(b, c, d);                     \
 	paddd (x*16)(%edx), tmp1;       \
@@ -79,7 +90,19 @@ const_stage3:
 	pslld $s, a;                    \
 	psrld $(32-s), tmp3;            \
 	por tmp3, a
+#endif
 
+#ifdef __LP64__
+#define STEP2(f, a, b, c, d, x, s)      \
+	f(b, c, d);                     \
+	paddd (x*16)(%rdx), tmp1;       \
+	paddd tmp4, tmp1;               \
+	paddd tmp1, a;                  \
+	movapd a, tmp3;                 \
+	pslld $s, a;                    \
+	psrld $(32-s), tmp3;            \
+	por tmp3, a
+#else
 #define STEP2(f, a, b, c, d, x, s)      \
 	f(b, c, d);                     \
 	paddd (x*16)(%edx), tmp1;       \
@@ -89,6 +112,7 @@ const_stage3:
 	pslld $s, a;                    \
 	psrld $(32-s), tmp3;            \
 	por tmp3, a
+#endif
 
 .text
 
@@ -100,13 +124,30 @@ const_stage3:
 
  md4_sse:
 _md4_sse:
+#ifdef __LP64__
+	push %rax
+	push %rdx
+	push %rcx
+	push %rsi
+	push %rdi
+	mov %rdx,%rcx
+	mov %rdi,%rax
+	mov %rsi,%rdx
+#else
 	pusha
+#endif
 	shl $3, %ecx
+#ifdef __LP64__
+	mov %ecx, 224(%rdx)
+	mov %ecx, 228(%rdx)
+	mov %ecx, 232(%rdx)
+	mov %ecx, 236(%rdx)
+#else
 	mov %ecx, 224(%edx)
 	mov %ecx, 228(%edx)
 	mov %ecx, 232(%edx)
 	mov %ecx, 236(%edx)
-
+#endif
 	movapd const_init_a, ctxa
 	movapd const_init_b, ctxb
 	movapd const_init_c, ctxc
@@ -172,12 +213,28 @@ _md4_sse:
 	paddd const_init_c, ctxc
 	paddd const_init_d, ctxd
 
+#ifdef __LP64__
+	movapd ctxa,  0(%rax)
+	movapd ctxb, 16(%rax)
+	movapd ctxc, 32(%rax)
+	movapd ctxd, 48(%rax)
+#else
 	movapd ctxa,  0(%eax)
 	movapd ctxb, 16(%eax)
 	movapd ctxc, 32(%eax)
 	movapd ctxd, 48(%eax)
+#endif
 
+
+#ifdef __LP64__
+	pop %rdi
+	pop %rsi
+	pop %rcx
+	pop %rdx
+	pop %rax
+#else
 	popa
+#endif
 	xor %eax, %eax
 	ret
 
