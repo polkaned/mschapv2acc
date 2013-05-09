@@ -8,9 +8,6 @@ ifeq ($(OS),Darwin)
 	ifeq ($(DARWIN),11)
 		CC=gcc -arch i386 -m32
 	endif
-	ifeq ($(DARWIN),12)
-		CC=gcc -m32
-	endif
 else
 	CC=gcc
 endif
@@ -44,4 +41,3 @@ md4sse2.o: md4sse2.c md4sse2.h
 
 clean: 
 	@-rm *.o mschapv2acc wpe2acc
-

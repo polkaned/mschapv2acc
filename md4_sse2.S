@@ -142,16 +142,21 @@ _md4_sse:
 	mov %ecx, 228(%rdx)
 	mov %ecx, 232(%rdx)
 	mov %ecx, 236(%rdx)
+	movapd const_init_a(%rip), ctxa
+	movapd const_init_b(%rip), ctxb
+	movapd const_init_c(%rip), ctxc
+	movapd const_init_d(%rip), ctxd
 #else
 	mov %ecx, 224(%edx)
 	mov %ecx, 228(%edx)
 	mov %ecx, 232(%edx)
 	mov %ecx, 236(%edx)
-#endif
 	movapd const_init_a, ctxa
 	movapd const_init_b, ctxb
 	movapd const_init_c, ctxc
 	movapd const_init_d, ctxd
+#endif
+
 
 	STEP1(F, ctxa, ctxb, ctxc, ctxd,  0,  3)
 	STEP1(F, ctxd, ctxa, ctxb, ctxc,  1,  7)
@@ -170,7 +175,11 @@ _md4_sse:
 	STEP1(F, ctxc, ctxd, ctxa, ctxb, 14, 11)
 	STEP1(F, ctxb, ctxc, ctxd, ctxa, 15, 19)
 
+#ifdef __LP64__
+	movapd const_stage2(%rip), tmp4
+#else
 	movapd const_stage2, tmp4
+#endif
 
 	STEP2(G, ctxa, ctxb, ctxc, ctxd,  0,  3)
 	STEP2(G, ctxd, ctxa, ctxb, ctxc,  4,  5)
@@ -189,7 +198,11 @@ _md4_sse:
 	STEP2(G, ctxc, ctxd, ctxa, ctxb, 11,  9)
 	STEP2(G, ctxb, ctxc, ctxd, ctxa, 15, 13)
 
+#ifdef __LP64__
+	movapd const_stage3(%rip), tmp4
+#else
 	movapd const_stage3, tmp4
+#endif
 
 	STEP2(H, ctxa, ctxb, ctxc, ctxd,  0,  3)
 	STEP2(H, ctxd, ctxa, ctxb, ctxc,  8,  9)
@@ -208,17 +221,20 @@ _md4_sse:
 	STEP2(H, ctxc, ctxd, ctxa, ctxb,  7, 11)
 	STEP2(H, ctxb, ctxc, ctxd, ctxa, 15, 15)
 
-	paddd const_init_a, ctxa
-	paddd const_init_b, ctxb
-	paddd const_init_c, ctxc
-	paddd const_init_d, ctxd
-
 #ifdef __LP64__
+	paddd const_init_a(%rip), ctxa
+	paddd const_init_b(%rip), ctxb
+	paddd const_init_c(%rip), ctxc
+	paddd const_init_d(%rip), ctxd
 	movapd ctxa,  0(%rax)
 	movapd ctxb, 16(%rax)
 	movapd ctxc, 32(%rax)
 	movapd ctxd, 48(%rax)
 #else
+	paddd const_init_a, ctxa
+	paddd const_init_b, ctxb
+	paddd const_init_c, ctxc
+	paddd const_init_d, ctxd
 	movapd ctxa,  0(%eax)
 	movapd ctxb, 16(%eax)
 	movapd ctxc, 32(%eax)
