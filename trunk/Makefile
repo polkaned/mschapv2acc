@@ -5,9 +5,6 @@ ifeq ($(OS),Darwin)
 	ifeq ($(DARWIN),10)
 		CC=gcc-4.0
 	endif
-	ifeq ($(DARWIN),11)
-		CC=gcc -arch i386 -m32
-	endif
 else
 	CC=gcc
 endif
