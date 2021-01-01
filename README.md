@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/polkaned/mschapv2acc.svg?branch=master)](https://travis-ci.org/polkaned/mschapv2acc)
+[![Build Status](https://travis-ci.com/polkaned/mschapv2acc.svg?branch=master)](https://travis-ci.com/polkaned/mschapv2acc)
 
 # mschapv2acc
 MS-CHAP-V2 SHOULD NOT be used...
